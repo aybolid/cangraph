@@ -12,6 +12,14 @@ type DataBarsPluginConfig = {
   };
 };
 
+type StyleConfig =
+  | {
+      style: RenderStyle;
+      fromXBarStyle?: never;
+      fromYBarStyle?: never;
+    }
+  | { style?: never; fromXBarStyle?: RenderStyle; fromYBarStyle?: RenderStyle };
+
 const DEFAULT_CONFIG = {
   barsFromAxis: {
     x: true,
@@ -22,11 +30,21 @@ const DEFAULT_CONFIG = {
 class DataBarsPlugin implements ChartPlugin {
   readonly id = DATA_BARS_PLUGIN_ID;
 
-  private style: RenderStyle = {};
+  private generalStyle: RenderStyle = {};
+  private xBarStyle: RenderStyle = {};
+  private yBarStyle: RenderStyle = {};
+
   private config: DataBarsPluginConfig = DEFAULT_CONFIG;
 
-  constructor(config?: Partial<DataBarsPluginConfig>, style?: RenderStyle) {
-    this.style = style ?? this.style;
+  constructor(config?: Partial<DataBarsPluginConfig>, style?: StyleConfig) {
+    if (style?.style) {
+      this.generalStyle = style.style;
+    }
+    if (style?.fromXBarStyle || style?.fromYBarStyle) {
+      this.xBarStyle = style.fromXBarStyle ?? this.xBarStyle;
+      this.yBarStyle = style.fromYBarStyle ?? this.yBarStyle;
+    }
+
     this.config = { ...this.config, ...config };
   }
 
@@ -57,7 +75,7 @@ class DataBarsPlugin implements ChartPlugin {
             start: Vec2D.new(dataPosition.x, plot.height + config.padding),
             end: dataPosition,
           },
-          this.style,
+          { ...this.generalStyle, ...this.xBarStyle },
         );
       }
       if (this.config.barsFromAxis.y) {
@@ -67,7 +85,7 @@ class DataBarsPlugin implements ChartPlugin {
             start: Vec2D.new(config.padding, dataPosition.y),
             end: dataPosition,
           },
-          this.style,
+          { ...this.generalStyle, ...this.yBarStyle },
         );
       }
     });

@@ -18,7 +18,7 @@ const chartBuilder = new ChartBuilder(chartContainer, {
 
 chartBuilder.addPlugin([
   new XyDataPlugin([
-    { x: 0, y: 12 },
+    { x: 0, y: 0 },
     { x: 10, y: 23 },
     { x: 20, y: 120 },
     { x: 30, y: 44 },
@@ -29,8 +29,12 @@ chartBuilder.addPlugin([
     { x: 80, y: 95 },
     { x: 90, y: 23 },
     { x: 100, y: 100 },
+    { x: 110, y: 0 },
   ]),
-  new DataBarsPlugin({ barsFromAxis: { x: true, y: true } }, { lineWidth: 1 }),
+  new DataBarsPlugin(
+    { barsFromAxis: { x: true, y: false } },
+    { style: { lineWidth: 12, strokeStyle: "blue" } },
+  ),
   new DataDotsPlugin({ withConnectingLines: true }, { fillStyle: "red" }),
   new XYAxisPlugin({ strokeStyle: "gray" }),
   new DataAxisLabelsPlugin(),
