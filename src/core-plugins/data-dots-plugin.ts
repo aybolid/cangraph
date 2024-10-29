@@ -1,7 +1,7 @@
 import { drawCircle, drawLine, RenderStyle } from "../canvas-graphics";
 import { ChartPlugin, PluginApplyPayload } from "../chart-plugin-interface";
 import { Vec2D } from "../vector2d";
-import { DATA_PLUGIN_ID, isDataPlugin } from "./data-plugin";
+import { isXyDataPlugin, XY_DATA_PLUGIN_ID } from "./xy-data-plugin";
 
 export const DATA_DOTS_PLUGIN_ID = "dataDotsPlugin";
 
@@ -27,9 +27,9 @@ class DataDotsPlugin implements ChartPlugin {
   public prepare(): void {}
 
   public apply({ ctx, plugins, config }: PluginApplyPayload): void {
-    const dataPlugin = plugins[DATA_PLUGIN_ID];
-    if (!isDataPlugin(dataPlugin)) {
-      throw new Error("Data plugin not found or corrupted");
+    const dataPlugin = plugins[XY_DATA_PLUGIN_ID];
+    if (!isXyDataPlugin(dataPlugin)) {
+      throw new Error("xy data plugin not found or corrupted");
     }
     const { data } = dataPlugin.getArtifacts();
 

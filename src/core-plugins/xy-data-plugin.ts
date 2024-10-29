@@ -1,6 +1,6 @@
 import { ChartPlugin } from "../chart-plugin-interface";
 
-export const DATA_PLUGIN_ID = "dataPlugin";
+export const XY_DATA_PLUGIN_ID = "xyDataPlugin";
 
 type Data = Array<{
   x: number;
@@ -14,8 +14,8 @@ type PreparedData = Array<{
   original: Data[number];
 }>;
 
-class DataPlugin implements ChartPlugin {
-  readonly id = DATA_PLUGIN_ID;
+class XyDataPlugin implements ChartPlugin {
+  readonly id = XY_DATA_PLUGIN_ID;
 
   readonly data: Data;
 
@@ -47,8 +47,8 @@ class DataPlugin implements ChartPlugin {
   public apply(): void {}
 }
 
-const isDataPlugin = (plugin: ChartPlugin): plugin is DataPlugin => {
-  return plugin?.id === DATA_PLUGIN_ID && plugin instanceof DataPlugin;
+const isXyDataPlugin = (plugin: ChartPlugin): plugin is XyDataPlugin => {
+  return plugin?.id === XY_DATA_PLUGIN_ID && plugin instanceof XyDataPlugin;
 };
 
-export { DataPlugin, isDataPlugin };
+export { XyDataPlugin, isXyDataPlugin };

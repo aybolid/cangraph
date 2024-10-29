@@ -2,8 +2,8 @@ import { ChartBuilder } from "./chart-builder";
 import { DataAxisLabelsPlugin } from "./core-plugins/data-axis-labels-plugin";
 import { DataBarsPlugin } from "./core-plugins/data-bars-plugin";
 import { DataDotsPlugin } from "./core-plugins/data-dots-plugin";
-import { DataPlugin } from "./core-plugins/data-plugin";
 import { XYAxisPlugin } from "./core-plugins/xy-axes-plugin";
+import { XyDataPlugin } from "./core-plugins/xy-data-plugin";
 
 const chartContainer = document.getElementById("chartContainer");
 if (chartContainer === null) {
@@ -17,7 +17,7 @@ const chartBuilder = new ChartBuilder(chartContainer, {
 });
 
 chartBuilder.addPlugin([
-  new DataPlugin([
+  new XyDataPlugin([
     { x: 0, y: 12 },
     { x: 10, y: 23 },
     { x: 20, y: 120 },

@@ -1,7 +1,7 @@
 import { drawLine, RenderStyle } from "../canvas-graphics";
 import { ChartPlugin, PluginApplyPayload } from "../chart-plugin-interface";
 import { Vec2D } from "../vector2d";
-import { DATA_PLUGIN_ID, isDataPlugin } from "./data-plugin";
+import { isXyDataPlugin, XY_DATA_PLUGIN_ID } from "./xy-data-plugin";
 
 export const DATA_BARS_PLUGIN_ID = "dataBarsPlugin";
 
@@ -33,9 +33,9 @@ class DataBarsPlugin implements ChartPlugin {
   public prepare(): void {}
 
   public apply({ plugins, config, ctx }: PluginApplyPayload): void {
-    const dataPlugin = plugins[DATA_PLUGIN_ID];
-    if (!isDataPlugin(dataPlugin)) {
-      throw new Error("Data plugin not found or corrupted");
+    const dataPlugin = plugins[XY_DATA_PLUGIN_ID];
+    if (!isXyDataPlugin(dataPlugin)) {
+      throw new Error("xy data plugin not found or corrupted");
     }
     const { data } = dataPlugin.getArtifacts();
 
