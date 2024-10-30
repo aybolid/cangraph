@@ -1,4 +1,5 @@
 import { ChartBuilder } from "./chart-builder";
+import { DataAreaPlugin } from "./core-plugins/data-area-plugin";
 import { DataAxisLabelsPlugin } from "./core-plugins/data-axis-labels-plugin";
 import { DataBarsPlugin } from "./core-plugins/data-bars-plugin";
 import { DataDotsPlugin } from "./core-plugins/data-dots-plugin";
@@ -31,14 +32,16 @@ chartBuilder.addPlugin([
     { x: 100, y: 100 },
     { x: 110, y: 0 },
   ]),
+
   new DataBarsPlugin(
-    { barsFromAxis: { x: true, y: false } },
-    { style: { lineWidth: 12, strokeStyle: "blue" } },
+    { barsFromAxis: { x: true, y: true } },
+    { style: { strokeStyle: "lightgray" } },
   ),
-  new DataDotsPlugin({ withConnectingLines: true }, { fillStyle: "red" }),
+  // new DataDotsPlugin({ withConnectingLines: false }, { fillStyle: "red" }),
   new XYAxisPlugin({ strokeStyle: "gray" }),
   new DataAxisLabelsPlugin(),
+  new DataAreaPlugin({ fillStyle: "#0000ff20" }),
 ]);
 
-const { canvas } = chartBuilder.build();
+const { canvas } = chartBuilder.render();
 canvas.style.border = "1px solid black";

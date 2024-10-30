@@ -70,7 +70,18 @@ const renderText: RenderFn<[{ text: string; position: Vec2D }, RenderStyle]> = (
   });
 };
 
-export { drawLine, drawCircle, renderText };
+const fillRect: RenderFn<
+  [{ position: Vec2D; size: { width: number; height: number } }, RenderStyle]
+> = (ctx, { position, size }, style) => {
+  withStyling(
+    ctx,
+    style,
+  )(() => {
+    ctx.fillRect(position.x, position.y, size.width, size.height);
+  });
+};
+
+export { drawLine, drawCircle, renderText, fillRect };
 
 const withStyling =
   (ctx: CanvasRenderingContext2D, style: RenderStyle) => (fn: () => void) => {

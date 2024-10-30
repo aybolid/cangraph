@@ -45,14 +45,33 @@ class ChartBuilder {
     }
 
     if (this.plugins[plugin.id] !== undefined) {
-      throw new Error(`Plugin with id ${plugin.id} already exists`);
+      return;
     }
 
     this.plugins[plugin.id] = plugin;
   }
 
-  public build(): { ctx: CanvasRenderingContext2D; canvas: HTMLCanvasElement } {
-    this.parent.appendChild(this.canvas);
+  public removePlugin(plugin: ChartPlugin | ChartPlugin[]): void {
+    if (Array.isArray(plugin)) {
+      plugin.forEach((p) => this.removePlugin(p));
+      return;
+    }
+
+    if (this.plugins[plugin.id] === undefined) {
+      return;
+    }
+
+    delete this.plugins[plugin.id];
+  }
+
+  public render(): {
+    ctx: CanvasRenderingContext2D;
+    canvas: HTMLCanvasElement;
+  } {
+    if (!this.parent.contains(this.canvas)) {
+      this.parent.appendChild(this.canvas);
+    }
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     const plugins = Object.values(this.plugins);
     plugins.forEach((p) => p.prepare({ ctx: this.ctx, config: this.config }));
